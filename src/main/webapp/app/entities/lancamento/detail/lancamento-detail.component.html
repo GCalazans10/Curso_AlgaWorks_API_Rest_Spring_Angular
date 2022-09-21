@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="lancamento">
+      <h2 data-cy="lancamentoDetailsHeading"><span jhiTranslate="algaWorksApp.lancamento.detail.title">Lancamento</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ lancamento.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ lancamento.descricao }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.dataVencimento">Data Vencimento</span></dt>
+        <dd>
+          <span>{{ lancamento.dataVencimento | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.dataPagamento">Data Pagamento</span></dt>
+        <dd>
+          <span>{{ lancamento.dataPagamento | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.valor">Valor</span></dt>
+        <dd>
+          <span>{{ lancamento.valor }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ lancamento.startDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.endDate">End Date</span></dt>
+        <dd>
+          <span>{{ lancamento.endDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.tipo">Tipo</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'algaWorksApp.TipoLancamento.' + lancamento.tipo }}">{{ lancamento.tipo }}</span>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.pessoa">Pessoa</span></dt>
+        <dd>
+          <div *ngIf="lancamento.pessoa">
+            <a [routerLink]="['/pessoa', lancamento.pessoa.id, 'view']">{{ lancamento.pessoa.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="algaWorksApp.lancamento.categoria">Categoria</span></dt>
+        <dd>
+          <div *ngIf="lancamento.categoria">
+            <a [routerLink]="['/categoria', lancamento.categoria.id, 'view']">{{ lancamento.categoria.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/lancamento', lancamento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

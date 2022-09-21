@@ -1,0 +1,24 @@
+{
+  "algaWorksApp": {
+    "categoria": {
+      "home": {
+        "title": "Categorias",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Categoria",
+        "createOrEditLabel": "Create or edit a Categoria",
+        "notFound": "No Categorias found"
+      },
+      "created": "A new Categoria is created with identifier {{ param }}",
+      "updated": "A Categoria is updated with identifier {{ param }}",
+      "deleted": "A Categoria is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Categoria {{ id }}?"
+      },
+      "detail": {
+        "title": "Categoria"
+      },
+      "id": "ID",
+      "nome": "Nome"
+    }
+  }
+}

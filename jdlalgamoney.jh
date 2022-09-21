@@ -1,0 +1,59 @@
+entity Endereco {
+	logradouro String,
+	numero String,
+	complemento String,
+    bairro String,
+    cep String,
+    cidade String,
+	estado String
+}
+entity Pessoa {
+	nome String required,
+    ativo Boolean
+}
+entity Categoria {
+	nome String,
+}
+entity Usuario {
+	nome String,
+	email String,
+	senha String
+}
+entity Permicao {
+	descricao String
+}
+entity Lancamento {
+	descricao String,
+    dataVencimento LocalDate,
+    dataPagamento LocalDate,
+    valor BigDecimal,
+    startDate Instant,
+	endDate Instant,
+	tipo TipoLancamento
+}
+enum TipoLancamento {
+    RECEITA, DESPESA
+}
+
+relationship OneToOne {
+	Pessoa{endereco} to Endereco
+    Usuario{permicao} to Permicao
+}
+
+relationship ManyToOne {
+	Lancamento{pessoa} to Pessoa,
+	Lancamento{categoria} to Categoria
+}
+
+// Set pagination options
+paginate Lancamento, Categoria with infinite-scroll
+paginate Usuario with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Categoria, Usuario
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

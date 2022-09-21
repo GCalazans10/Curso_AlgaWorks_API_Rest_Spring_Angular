@@ -1,0 +1,96 @@
+<div>
+  <h2 id="page-heading" data-cy="PessoaHeading">
+    <span jhiTranslate="algaWorksApp.pessoa.home.title">Pessoas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="algaWorksApp.pessoa.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-pessoa"
+        [routerLink]="['/pessoa/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="algaWorksApp.pessoa.home.createLabel"> Create a new Pessoa </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="pessoas?.length === 0">
+    <span jhiTranslate="algaWorksApp.pessoa.home.notFound">No Pessoas found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="pessoas && pessoas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nome">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.pessoa.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="ativo">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.pessoa.ativo">Ativo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="endereco.id">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.pessoa.endereco">Endereco</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pessoa of pessoas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/pessoa', pessoa.id, 'view']">{{ pessoa.id }}</a>
+          </td>
+          <td>{{ pessoa.nome }}</td>
+          <td>{{ pessoa.ativo }}</td>
+          <td>
+            <div *ngIf="pessoa.endereco">
+              <a [routerLink]="['/endereco', pessoa.endereco.id, 'view']">{{ pessoa.endereco.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/pessoa', pessoa.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/pessoa', pessoa.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(pessoa)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

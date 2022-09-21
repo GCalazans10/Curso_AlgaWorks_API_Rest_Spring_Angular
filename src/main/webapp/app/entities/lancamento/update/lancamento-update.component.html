@@ -1,0 +1,152 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-lancamento-heading" data-cy="LancamentoCreateUpdateHeading" jhiTranslate="algaWorksApp.lancamento.home.createOrEditLabel">
+        Create or edit a Lancamento
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.dataVencimento" for="field_dataVencimento">Data Vencimento</label>
+          <div class="input-group">
+            <input
+              id="field_dataVencimento"
+              data-cy="dataVencimento"
+              type="text"
+              class="form-control"
+              name="dataVencimento"
+              ngbDatepicker
+              #dataVencimentoDp="ngbDatepicker"
+              formControlName="dataVencimento"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataVencimentoDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.dataPagamento" for="field_dataPagamento">Data Pagamento</label>
+          <div class="input-group">
+            <input
+              id="field_dataPagamento"
+              data-cy="dataPagamento"
+              type="text"
+              class="form-control"
+              name="dataPagamento"
+              ngbDatepicker
+              #dataPagamentoDp="ngbDatepicker"
+              formControlName="dataPagamento"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataPagamentoDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.valor" for="field_valor">Valor</label>
+          <input type="number" class="form-control" name="valor" id="field_valor" data-cy="valor" formControlName="valor" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.startDate" for="field_startDate">Start Date</label>
+          <div class="d-flex">
+            <input
+              id="field_startDate"
+              data-cy="startDate"
+              type="datetime-local"
+              class="form-control"
+              name="startDate"
+              formControlName="startDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.endDate" for="field_endDate">End Date</label>
+          <div class="d-flex">
+            <input
+              id="field_endDate"
+              data-cy="endDate"
+              type="datetime-local"
+              class="form-control"
+              name="endDate"
+              formControlName="endDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.tipo" for="field_tipo">Tipo</label>
+          <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
+            <option [ngValue]="null">{{ 'algaWorksApp.TipoLancamento.null' | translate }}</option>
+            <option *ngFor="let tipoLancamento of tipoLancamentoValues" [value]="tipoLancamento">
+              {{ 'algaWorksApp.TipoLancamento.' + tipoLancamento | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.pessoa" for="field_pessoa">Pessoa</label>
+          <select
+            class="form-control"
+            id="field_pessoa"
+            data-cy="pessoa"
+            name="pessoa"
+            formControlName="pessoa"
+            [compareWith]="comparePessoa"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="pessoaOption" *ngFor="let pessoaOption of pessoasSharedCollection">{{ pessoaOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="algaWorksApp.lancamento.categoria" for="field_categoria">Categoria</label>
+          <select
+            class="form-control"
+            id="field_categoria"
+            data-cy="categoria"
+            name="categoria"
+            formControlName="categoria"
+            [compareWith]="compareCategoria"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="categoriaOption" *ngFor="let categoriaOption of categoriasSharedCollection">{{ categoriaOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+{
+  "algaWorksApp": {
+    "TipoLancamento": {
+      "null": "",
+      "RECEITA": "RECEITA",
+      "DESPESA": "DESPESA"
+    }
+  }
+}

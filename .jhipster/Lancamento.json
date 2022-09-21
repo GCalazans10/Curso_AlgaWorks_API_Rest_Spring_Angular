@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20220921171624",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "lancamento",
+  "fields": [
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dataVencimento",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dataPagamento",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "valor",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoLancamento",
+      "fieldValues": "RECEITA,DESPESA"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Lancamento",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "pessoa",
+      "relationshipName": "pessoa",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "categoria",
+      "relationshipName": "categoria",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
