@@ -1,0 +1,20 @@
+{
+  "applications": "*",
+  "changelogDate": "20220921171623",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "permicao",
+  "fields": [
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Permicao",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

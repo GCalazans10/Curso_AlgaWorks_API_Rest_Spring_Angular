@@ -1,0 +1,20 @@
+{
+  "applications": "*",
+  "changelogDate": "20220921171621",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "categoria",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Categoria",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

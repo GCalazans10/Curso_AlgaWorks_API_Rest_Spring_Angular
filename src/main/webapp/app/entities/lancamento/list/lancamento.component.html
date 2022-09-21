@@ -1,0 +1,157 @@
+<div>
+  <h2 id="page-heading" data-cy="LancamentoHeading">
+    <span jhiTranslate="algaWorksApp.lancamento.home.title">Lancamentos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="algaWorksApp.lancamento.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-lancamento"
+        [routerLink]="['/lancamento/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="algaWorksApp.lancamento.home.createLabel"> Create a new Lancamento </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="lancamentos?.length === 0">
+    <span jhiTranslate="algaWorksApp.lancamento.home.notFound">No Lancamentos found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="lancamentos && lancamentos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="descricao">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dataVencimento">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.dataVencimento">Data Vencimento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dataPagamento">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.dataPagamento">Data Pagamento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="valor">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.valor">Valor</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="startDate">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.startDate">Start Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="endDate">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.endDate">End Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="tipo">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.tipo">Tipo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pessoa.id">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.pessoa">Pessoa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="categoria.id">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.lancamento.categoria">Categoria</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let lancamento of lancamentos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/lancamento', lancamento.id, 'view']">{{ lancamento.id }}</a>
+          </td>
+          <td>{{ lancamento.descricao }}</td>
+          <td>{{ lancamento.dataVencimento | formatMediumDate }}</td>
+          <td>{{ lancamento.dataPagamento | formatMediumDate }}</td>
+          <td>{{ lancamento.valor }}</td>
+          <td>{{ lancamento.startDate | formatMediumDatetime }}</td>
+          <td>{{ lancamento.endDate | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'algaWorksApp.TipoLancamento.' + lancamento.tipo }}">{{ lancamento.tipo }}</td>
+          <td>
+            <div *ngIf="lancamento.pessoa">
+              <a [routerLink]="['/pessoa', lancamento.pessoa.id, 'view']">{{ lancamento.pessoa.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="lancamento.categoria">
+              <a [routerLink]="['/categoria', lancamento.categoria.id, 'view']">{{ lancamento.categoria.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/lancamento', lancamento.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/lancamento', lancamento.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(lancamento)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

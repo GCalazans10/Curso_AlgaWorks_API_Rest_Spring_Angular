@@ -1,0 +1,130 @@
+<div>
+  <h2 id="page-heading" data-cy="EnderecoHeading">
+    <span jhiTranslate="algaWorksApp.endereco.home.title">Enderecos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="algaWorksApp.endereco.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-endereco"
+        [routerLink]="['/endereco/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="algaWorksApp.endereco.home.createLabel"> Create a new Endereco </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="enderecos?.length === 0">
+    <span jhiTranslate="algaWorksApp.endereco.home.notFound">No Enderecos found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="enderecos && enderecos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="logradouro">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.endereco.logradouro">Logradouro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="numero">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.endereco.numero">Numero</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="complemento">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.endereco.complemento">Complemento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bairro">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.endereco.bairro">Bairro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cep">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.endereco.cep">Cep</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cidade">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.endereco.cidade">Cidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="estado">
+            <div class="d-flex">
+              <span jhiTranslate="algaWorksApp.endereco.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let endereco of enderecos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/endereco', endereco.id, 'view']">{{ endereco.id }}</a>
+          </td>
+          <td>{{ endereco.logradouro }}</td>
+          <td>{{ endereco.numero }}</td>
+          <td>{{ endereco.complemento }}</td>
+          <td>{{ endereco.bairro }}</td>
+          <td>{{ endereco.cep }}</td>
+          <td>{{ endereco.cidade }}</td>
+          <td>{{ endereco.estado }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/endereco', endereco.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/endereco', endereco.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(endereco)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

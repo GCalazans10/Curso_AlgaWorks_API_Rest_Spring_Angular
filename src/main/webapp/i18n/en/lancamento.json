@@ -1,0 +1,32 @@
+{
+  "algaWorksApp": {
+    "lancamento": {
+      "home": {
+        "title": "Lancamentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Lancamento",
+        "createOrEditLabel": "Create or edit a Lancamento",
+        "notFound": "No Lancamentos found"
+      },
+      "created": "A new Lancamento is created with identifier {{ param }}",
+      "updated": "A Lancamento is updated with identifier {{ param }}",
+      "deleted": "A Lancamento is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Lancamento {{ id }}?"
+      },
+      "detail": {
+        "title": "Lancamento"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "dataVencimento": "Data Vencimento",
+      "dataPagamento": "Data Pagamento",
+      "valor": "Valor",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "tipo": "Tipo",
+      "pessoa": "Pessoa",
+      "categoria": "Categoria"
+    }
+  }
+}

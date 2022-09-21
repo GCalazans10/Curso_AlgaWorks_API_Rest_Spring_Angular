@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20220921171620",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "pessoa",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ativo",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Pessoa",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "endereco",
+      "ownerSide": true,
+      "relationshipName": "endereco",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
